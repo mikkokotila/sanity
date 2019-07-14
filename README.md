@@ -1,5 +1,6 @@
 # sanity
-A sanity checker for online advertising investments.
+
+Sanity is a planning tool for sanity checking of online media investment. The input ranges are based on available research findings and data.
 
 
 | Parameter  | Min | Max | Description | Sources |
