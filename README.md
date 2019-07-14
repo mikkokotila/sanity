@@ -23,6 +23,11 @@
 Sanity is a tool for intelligent media buying. It brings sanity to the process by helping you to first check if your media investment plan makes any sense in the first place. The approach is 100% based on available resesearch and data.
 </p>
 
+# Key Features
+
+- rapid testing of investment scenarios
+- ideas for optimizing investment strategy
+
 # Parameters
 
 | Parameter  | Min | Max | Description | Sources |
