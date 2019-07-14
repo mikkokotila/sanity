@@ -1,7 +1,29 @@
-# sanity
+<h1 align="center">
+  <br>
+  <a href="http://nearfuturetoday.com"><img src="https://i.ibb.co/NWHjYGv/sanity-media-planning.png" alt="Sanity" width="150"></a>
+  <br>
+</h1>
 
-Sanity is a planning tool for sanity checking of online media investment. The input ranges are based on available research findings and data.
+<p align="center">
+  
+  <a href="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-sa.png">
+    <img width=150px src="https://raw.githubusercontent.com/eka-foundation/home/master/images/by-sa.png" alt="License">
+  </a>
 
+</p>
+
+<p align="center">
+  <a href="#Key-Features">Key Features</a>  •
+  <a href="#Parameters">Parameters</a>  •
+  <a href="https://github.com/mikkokotila/sanity/issues">Issues</a>  •
+  <a href="https://github.commikkokotila/sanity/archive/master.zip">Download</a>
+</p>
+<hr>
+<p align="center">
+Sanity is a tool for intelligent media buying. It brings sanity to the process by helping you to first check if your media investment plan makes any sense in the first place. The approach is 100% based on available resesearch and data.
+</p>
+
+# Parameters
 
 | Parameter  | Min | Max | Description | Sources |
 | ------------- | ------------- | ------------- | ------------- | ------------- |
