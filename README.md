@@ -28,12 +28,12 @@ Sanity is a tool for intelligent media buying. It brings sanity to the process b
 
 ## media investment effectiveness planner/checker
 <p align="center">
-<img src='https://i.ibb.co/CKn6HZT/ezgif-com-video-to-gif.gif'>
+<img src='https://i.ibb.co/CKn6HZT/ezgif-com-video-to-gif.gif' width=250px>
 </p>
 
 ### a market microstructure simulator
 <p align="center">
-<img src='https://i.ibb.co/tHfy04R/programmatic-market-simulator.png'>
+<img src='https://i.ibb.co/tHfy04R/programmatic-market-simulator.png' width=400px>
 </p>
 
 # Get Started
@@ -42,7 +42,7 @@ Sanity is a tool for intelligent media buying. It brings sanity to the process b
 
 # Parameters
 
-The below parameters are used in media investment effectiveness checker. 
+The below parameters are used in media investment effectiveness checker.
 
 | Parameter  | Min | Max | Description | Sources |
 | ------------- | ------------- | ------------- | ------------- | ------------- |
