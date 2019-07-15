@@ -31,9 +31,9 @@ Sanity is a tool for intelligent media buying. It brings sanity to the process b
 <img src='https://i.ibb.co/CKn6HZT/ezgif-com-video-to-gif.gif' width=250px>
 </p>
 
-### a market microstructure simulator
+## a market microstructure simulator
 <p align="center">
-<img src='https://i.ibb.co/tHfy04R/programmatic-market-simulator.png' width=400px>
+<img src='https://i.ibb.co/tHfy04R/programmatic-market-simulator.png' width=550px>
 </p>
 
 # Get Started
