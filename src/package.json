@@ -1,0 +1,48 @@
+{
+  "name": "sanity",
+  "version": "0.0.1",
+  "description": "Sanity is a tool for intelligent media buying. It brings sanity to the process by helping you to first check if your media investment plan makes any sense in the first place. The approach is 100% based on available research and data.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mikkokotila/sanity.git"
+  },
+  "keywords": [
+    "programmatic",
+    "media",
+    "advertising",
+    "digital",
+    "roi",
+    "invalid",
+    "traffic",
+    "commissions",
+    "adtech",
+    "tax"
+  ],
+  "author": "Mikko Kotila",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mikkokotila/sanity/issues"
+  },
+  "homepage": "https://github.com/mikkokotila/sanity#readme",
+  "dependencies": {
+    "bootstrap": "^4.3.1",
+    "browserify": "^16.3.0",
+    "chart.js": "^2.8.0",
+    "clusterize.js": "^0.18.1",
+    "cors": "^2.8.5",
+    "errorhandler": "^1.5.1",
+    "express": "^4.17.1",
+    "express-basic-auth": "^1.2.0",
+    "express-session": "^1.16.2",
+    "jquery": "^3.4.1",
+    "local-web-server": "^3.0.4",
+    "mongoose": "^5.6.5",
+    "nodemon": "^1.19.1",
+    "passport": "^0.4.0",
+    "popper.js": "^1.15.0"
+  }
+}
