@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html>
+
+<!-- HEADER STARTS -->
+
+<head>
+<title>SANITY</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="css/style.css">
+<link rel="shortcut icon" href="sanity_logo.png" type="image/x-icon"/>
+<script type="text/javascript" src="bundle.js"></script>
+</head>
+
+<!-- BODY STARTS -->
+
+<body onload="initValues()">
+
+<div class="container">
+
+<div class="row">
+	<div class="col-12 text-center mt-3 mb-3">
+		<img src="sanity_logo.png" height="40">
+	</div>
+</div>
+
+<div class="row">
+	<div class="col"></div>
+	<div class="col-8">
+		<h1 class="mb-4">Frequency Adjustment</h1>
+	</div>
+	<div class="col">
+	</div>
+</div>
+
+<div class="row">
+	<div class="col"></div>
+	<div class="col-10 text-left" style="max-width: 1050px;">
+		<canvas id="myChart" width="400" height="300"></canvas>
+	</div>
+	<div class="col"></div>
+</div>
+
+<div class="row mt-4 mb-3">
+	<div class="col text-right">TARGET FREQUENCY</div>
+	<div class="col-6 text-center">
+		<input type="range" min="1" max="25" value="8" step="1" class="slider" id="target_frequency">
+	</div>
+	<div class="col text-left"><span id="target_frequency_value"></span>/day</div>
+</div>
+
+<div class="row mb-3">
+	<div class="col text-right">NON-HUMAN</div>
+	<div class="col-6 text-center">
+		<input type="range" min="0" max="100" value="0" step="1" class="slider" id="nonhuman">
+	</div>
+	<div class="col text-left"><span id="nonhuman_value"></span>%</div>
+</div>
+
+<div class="row mb-3">
+	<div class="col text-right">INVIEW</div>
+	<div class="col-6 text-center">
+		<input type="range" min="0" max="100" value="100" step="1" class="slider" id="inview">
+	</div>
+	<div class="col text-left"><span id="inview_value"></span>%</div>
+</div>
+
+<div class="row mb-4">
+	<div class="col text-right">OVER-FREQUENCY</div>
+	<div class="col-6 text-center">
+		<input type="range" min="0" max="100" value="20" step="1" class="slider" id="overfrequency">
+	</div>
+	<div class="col text-left"><span id="overfrequency_value"></span>%</div>
+</div>
+
+<div class="row mb-5">
+	<div class="col-12">
+	  <center><a data-toggle="collapse" href="#advancedSettings" role="button" aria-expanded="false" aria-controls="collapseExample">
+	    ADVANCED SETTINGS
+	  </a></center>
+		<div class="collapse" id="advancedSettings">
+
+			<div class="row mb-3 mt-4">
+				<div class="col text-right">ESTABLISHED BRAND</div>
+				<div class="col-6 text-center">
+					<input type="range" min="-20" max="20" value="0" step="10" class="slider" id="a1">
+				</div>
+				<div class="col text-left">NEW BRAND</div>
+			</div>
+
+			<div class="row mb-3">
+				<div class="col text-right">ESTABLISHED CATEGORY</div>
+				<div class="col-6 text-center">
+					<input type="range" min="-20" max="20" value="0" step="10" class="slider" id="a2">
+				</div>
+				<div class="col text-left">NEW CATEGORY</div>
+			</div>
+
+			<div class="row mb-3">
+				<div class="col text-right">HIGH BRAND SHARE</div>
+				<div class="col-6 text-center">
+					<input type="range" min="-20" max="20" value="0" step="10" class="slider" id="a3">
+				</div>
+				<div class="col text-left">LOW BRAND SHARE</div>
+			</div>
+
+			<div class="row mb-3">
+				<div class="col text-right">HIGH LOYALTY</div>
+				<div class="col-6 text-center">
+					<input type="range" min="-20" max="20" value="0" step="10" class="slider" id="a4">
+				</div>
+				<div class="col text-left">LOW LOYALTY</div>
+			</div>
+
+			<div class="row mb-3">
+				<div class="col text-right">INFREQUENT USE</div>
+				<div class="col-6 text-center">
+					<input type="range" min="-20" max="20" value="0" step="10" class="slider" id="a5">
+				</div>
+				<div class="col text-left">FREQUENT USE</div>
+			</div>
+
+			<div class="row mb-3">
+				<div class="col text-right">LONG PURCHASE CYCLE</div>
+				<div class="col-6 text-center">
+					<input type="range" min="-20" max="20" value="0" step="10" class="slider" id="a6">
+				</div>
+				<div class="col text-left">SHORT PURCHASE CYCLE</div>
+			</div>
+
+			<div class="row mb-3">
+				<div class="col text-right">LOW SOV</div>
+				<div class="col-6 text-center">
+					<input type="range" min="-20" max="20" value="0" step="10" class="slider" id="a7">
+				</div>
+				<div class="col text-left">HIGH SOV</div>
+			</div>
+
+			<div class="row mb-3">
+				<div class="col text-right">SIMPLE MESSAGE</div>
+				<div class="col-6 text-center">
+					<input type="range" min="-20" max="20" value="0" step="10" class="slider" id="a8">
+				</div>
+				<div class="col text-left">COMPLEX MESSAGE</div>
+			</div>
+
+			<div class="row mb-3">
+				<div class="col text-right">UNIQUE MESSAGE</div>
+				<div class="col-6 text-center">
+					<input type="range" min="-20" max="20" value="0" step="10" class="slider" id="a9">
+				</div>
+				<div class="col text-left">COMMON MESSAGE</div>
+			</div>
+
+			<div class="row mb-3">
+				<div class="col text-right">ON-GOING CAMPAIGN</div>
+				<div class="col-6 text-center">
+					<input type="range" min="-20" max="20" value="0" step="10" class="slider" id="a10">
+				</div>
+				<div class="col text-left">NEW CAMPAIGN</div>
+			</div>
+
+			<div class="row mb-3">
+				<div class="col text-right">PRODUCT FOCUSED</div>
+				<div class="col-6 text-center">
+					<input type="range" min="-20" max="20" value="0" step="10" class="slider" id="a11">
+				</div>
+				<div class="col text-left">>IMAGE FOCUSED</div>
+			</div>
+
+			<div class="row mb-3">
+				<div class="col text-right">HIGH WEAROUT</div>
+				<div class="col-6 text-center">
+					<input type="range" min="-20" max="20" value="0" step="10" class="slider" id="a12">
+				</div>
+				<div class="col text-left">LOW WEAROUT</div>
+			</div>
+
+			<div class="row mb-3">
+				<div class="col text-right">LARGE AD UNITS</div>
+				<div class="col-6 text-center">
+					<input type="range" min="-20" max="20" value="0" step="10" class="slider" id="a13">
+				</div>
+				<div class="col text-left">SMALL AD UNITS</div>
+			</div>
+
+			<div class="row mb-3">
+				<div class="col text-right">NEW AD FORMAT</div>
+				<div class="col-6 text-center">
+					<input type="range" min="-20" max="20" value="0" step="10" class="slider" id="a14">
+				</div>
+				<div class="col text-left">CONVENTIONAL AD FORMAT</div>
+			</div>
+
+			<div class="row mb-3">
+				<div class="col text-right">LOW CLUTTER</div>
+				<div class="col-6 text-center">
+					<input type="range" min="-20" max="20" value="0" step="10" class="slider" id="a15">
+				</div>
+				<div class="col text-left">HIGH CLUTTER</div>
+			</div>
+
+			<div class="row mb-3">
+				<div class="col text-right">FIXED PLACEMENT</div>
+				<div class="col-6 text-center">
+					<input type="range" min="-20" max="20" value="0" step="10" class="slider" id="a16">
+				</div>
+				<div class="col text-left">RANDOM PLACEMENT</div>
+			</div>
+
+			<div class="row mb-3">
+				<div class="col text-right">RELEVANT EDITORIAL</div>
+				<div class="col-6 text-center">
+					<input type="range" min="-20" max="20" value="0" step="10" class="slider" id="a17">
+				</div>
+				<div class="col text-left">GENERIC EDITORIAL</div>
+			</div>
+
+			<div class="row mb-3">
+				<div class="col text-right">FAVORABLE EDITORIAL</div>
+				<div class="col-6 text-center">
+					<input type="range" min="-20" max="20" value="0" step="10" class="slider" id="a18">
+				</div>
+				<div class="col text-left">NEGATIVE EDITORIAL</div>
+			</div>
+
+			<div class="row mb-3">
+				<div class="col text-right">GENERIC AUDIENCE</div>
+				<div class="col-6 text-center">
+					<input type="range" min="-20" max="20" value="0" step="10" class="slider" id="a19">
+				</div>
+				<div class="col text-left">YOUNG AUDIENCE</div>
+			</div>
+
+			<div class="row mb-3">
+				<div class="col text-right">ATTENTIVE AUDIENCE</div>
+				<div class="col-6 text-center">
+					<input type="range" min="-20" max="20" value="0" step="10" class="slider" id="a20">
+				</div>
+				<div class="col text-left">INATTENTIVE AUDIENCE</div>
+			</div>
+
+			<div class="row mb-3">
+				<div class="col text-right">INFLUENTIAL VEHICLE</div>
+				<div class="col-6 text-center">
+					<input type="range" min="-20" max="20" value="0" step="10" class="slider" id="a21">
+				</div>
+				<div class="col text-left">UNINFLUENTIAL VEHICLE</div>
+			</div>
+
+			<div class="row mb-3">
+				<div class="col text-right">ESTABLISHED BRAND</div>
+				<div class="col-6 text-center">
+					<input type="range" min="-20" max="20" value="0" step="10" class="slider" id="a22">
+				</div>
+				<div class="col text-left">NEW BRAND</div>
+			</div>
+
+			<div class="row mb-3">
+				<div class="col text-right">CONTINUOUS SCHEDULING</div>
+				<div class="col-6 text-center">
+					<input type="range" min="-20" max="20" value="0" step="10" class="slider" id="a23">
+				</div>
+				<div class="col text-left">PULSE OR FLIGHT SCHEDULING</div>
+			</div>
+
+			<div class="row mb-3">
+				<div class="col text-right">FEW VEHICLES</div>
+				<div class="col-6 text-center">
+					<input type="range" min="-20" max="20" value="0" step="10" class="slider" id="a24">
+				</div>
+				<div class="col text-left">MANY VEHICLES</div>
+			</div>
+
+			<div class="row mb-4">
+				<div class="col text-right">HIGH REPEAT EXPOSURE</div>
+				<div class="col-6 text-center">
+					<input type="range" min="-20" max="20" value="0" step="10" class="slider" id="a25">
+				</div>
+				<div class="col text-left">LOW REPEAT EXPOSURE</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- BOTTOM LINE  -->
+<center>
+<div class="row" style="max-width: 440px;">
+	<div class="col-6">
+		<div class="card bg-light mb-5" style="max-width: 12rem;">
+		  <div class="card-header text-left">FREQUENCY CAP</div>
+		  <div class="card-body">
+		    <h3 class="card-title text-right"><span id="frequency_cap"></span>/day</h5>
+		  </div>
+		</div>
+	</div>
+	<div class="col-6">
+		<div class="card bg-light mb-5" style="max-width: 12rem;">
+		  <div class="card-header text-left">TARGET/CAP RATE</div>
+		  <div class="card-body">
+		    <h3 class="card-title text-right">1:<span id="targetcap_ratio"></span></h5>
+		  </div>
+		</div>
+	</div>
+</div>
+</center>
+
+<!-- NAVIGATION  -->
+<div class="row bg-light fixed-bottom">
+	<div class="col"></div>
+	<div class="col-12" style="max-width: 750px;">
+		<!-- Just an image -->
+		<nav class="navbar navbar-light bg-light text-center">
+  			<a class="nav-link" href="media.html">MEDIA</a>
+  			<a class="nav-link" href="commissions.html">COMMISSIONS</a>
+  			<a class="nav-link" href="non-human.html">NON-HUMAN</a>
+  			<a class="nav-link" href="data.html">DATA</a>
+  			<a class="nav-link active" href="frequency.html">FREQUENCY</a>
+  			<a class="nav-link" href="roi.html">ROI</a>
+		</nav>
+	</div>
+	<div class="col"></div>
+</div>
+
+<script>
+
+
+// GENERAL
+
+function initValues() {
+	document.getElementById('frequency_cap').innerHTML = 8;
+	document.getElementById('targetcap_ratio').innerHTML = 1.3;
+	;
+
+}
+
+// SLIDER DEFINITIONS
+
+var target_frequency = document.getElementById("target_frequency");
+var target_frequency_output = document.getElementById("target_frequency_value");
+target_frequency_output.innerHTML = target_frequency.value;
+target_frequency.oninput = function() {
+	target_frequency_output.innerHTML = this.value;
+computeValues()
+}
+
+var nonhuman = document.getElementById("nonhuman");
+var nonhuman_output = document.getElementById("nonhuman_value");
+nonhuman_output.innerHTML = nonhuman.value;
+nonhuman.oninput = function() {
+	nonhuman_output.innerHTML = this.value;
+computeValues()
+}
+
+var inview = document.getElementById("inview");
+var inview_output = document.getElementById("inview_value");
+inview_output.innerHTML = inview.value;
+inview.oninput = function() {
+	inview_output.innerHTML = this.value;
+computeValues()
+}
+
+var overfrequency = document.getElementById("overfrequency");
+var overfrequency_output = document.getElementById("overfrequency_value");
+overfrequency_output.innerHTML = overfrequency.value;
+overfrequency.oninput = function() {
+	overfrequency_output.innerHTML = this.value;
+computeValues()
+}
+
+var a1 = document.getElementById("a1");
+a1.oninput = function() {
+	computeValues()
+}
+
+var a2 = document.getElementById("a2");
+a2.oninput = function() {
+	computeValues()
+}
+
+var a3 = document.getElementById("a3");
+a3.oninput = function() {
+	computeValues()
+}
+
+var a4 = document.getElementById("a4");
+a4.oninput = function() {
+	computeValues()
+}
+
+var a5 = document.getElementById("a5");
+a5.oninput = function() {
+	computeValues()
+}
+
+var a6 = document.getElementById("a6");
+a6.oninput = function() {
+	computeValues()
+}
+
+var a7 = document.getElementById("a7");
+a7.oninput = function() {
+	computeValues()
+}
+
+var a8 = document.getElementById("a8");
+a8.oninput = function() {
+	computeValues()
+}
+
+var a9 = document.getElementById("a9");
+a9.oninput = function() {
+	computeValues()
+}
+
+var a10 = document.getElementById("a10");
+a10.oninput = function() {
+	computeValues()
+}
+
+var a11 = document.getElementById("a11");
+a11.oninput = function() {
+	computeValues()
+}
+
+var a12 = document.getElementById("a12");
+a12.oninput = function() {
+	computeValues()
+}
+
+var a13 = document.getElementById("a13");
+a13.oninput = function() {
+	computeValues()
+}
+
+var a14 = document.getElementById("a14");
+a14.oninput = function() {
+	computeValues()
+}
+
+var a15 = document.getElementById("a15");
+a15.oninput = function() {
+	computeValues()
+}
+
+var a16 = document.getElementById("a16");
+a16.oninput = function() {
+	computeValues()
+}
+
+var a17 = document.getElementById("a17");
+a17.oninput = function() {
+	computeValues()
+}
+
+var a18 = document.getElementById("a18");
+a18.oninput = function() {
+	computeValues()
+}
+
+var a19 = document.getElementById("a19");
+a19.oninput = function() {
+	computeValues()
+}
+
+var a20 = document.getElementById("a20");
+a20.oninput = function() {
+	computeValues()
+}
+
+var a21 = document.getElementById("a21");
+a21.oninput = function() {
+	computeValues()
+}
+
+var a22 = document.getElementById("a22");
+a22.oninput = function() {
+	computeValues()
+}
+
+var a23 = document.getElementById("a23");
+a23.oninput = function() {
+	computeValues()
+}
+
+var a24 = document.getElementById("a24");
+a24.oninput = function() {
+	computeValues()
+}
+
+var a25 = document.getElementById("a25");
+a25.oninput = function() {
+	computeValues()
+}
+
+function computeValues() {
+
+  // GET CURRENT SLIDER VALUES
+  var target_frequency = +document.getElementById('target_frequency').value;
+  var nonhuman = +document.getElementById('nonhuman').value;
+  var inview = +document.getElementById('inview').value;
+  var overfrequency = +document.getElementById('overfrequency').value;
+
+  var result = 1
+  for (i = 1; i < 26; i++) {
+  	value = +document.getElementById('a' + i).value
+  	result += (value / 100)
+  }
+
+  multiplier = result
+
+
+  // COMPUTE GRAPH VALUES
+  var _frequency_cap = target_frequency / (1 - (nonhuman / 100)) / (inview / 100) / (1 - (overfrequency / 100)) * multiplier
+
+  var _targetcap_ratio = _frequency_cap / target_frequency
+
+  // COMPUTE SUMMARY VALUES
+
+  // CHANGE GRAPH VALUES
+  updateGraph(target_frequency, _frequency_cap)
+
+  // CHANGE SUMMARY VALUES
+  document.getElementById('frequency_cap').innerHTML = parseInt(_frequency_cap).toLocaleString('en');
+  document.getElementById('targetcap_ratio').innerHTML = parseFloat(_targetcap_ratio).toFixed(1).toLocaleString('en');
+
+}
+
+function updateGraph(a, b, c) {
+	myChart.data.datasets[0].data[0] = a;
+	myChart.data.datasets[0].data[1] = b;
+	myChart.update();
+}
+
+// GRAPH STARTS
+
+Chart.defaults.global.legend.display = false;
+Chart.defaults.global.defaultFontFamily = 'Alef';
+Chart.defaults.global.defaultFontSize = 20;
+Chart.defaults.global.defaultFontColor = 'rgba(0, 0, 0, 0.65)';
+
+var ctx = document.getElementById('myChart').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Target Frequency', 'Frequency Cap'],
+        datasets: [{
+            label: 'daily impressions',
+            // STARTING VALUES
+            data: [8, 8],
+            backgroundColor: [
+                'rgba(0, 0, 0, 0.1)',
+                'rgba(192, 145, 231, .3)'
+            ],
+            borderColor: [
+            	'rgba(0, 0, 0, 0.1)',
+                'rgba(0, 0, 0, 0.1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true,
+                    // Y-AXIS LIMIT
+                    max: 100
+
+                }
+            }]
+        }
+    }
+});
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+
+<!-- HEADER STARTS -->
+
+<head>
+<title>SANITY</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="css/style.css">
+<link rel="shortcut icon" href="sanity_logo.png" type="image/x-icon"/>
+<script type="text/javascript" src="bundle.js"></script>
+</head>
+
+<!-- BODY STARTS -->
+
+<body onload="initValues()">
+
+<div class="container">
+
+<div class="row">
+	<div class="col-12 text-center mt-3 mb-3">
+		<img src="sanity_logo.png" height="40">
+	</div>
+</div>
+
+<div class="row">
+	<div class="col"></div>
+	<div class="col-8">
+		<h1 class="mb-4" data-toggle="tooltip" data-placement="bottom" title="Calculates the Return-on-Investment for a given media budget.">Working Media (on $10,000)</h1>
+	</div>
+	<div class="col">
+	</div>
+</div>
+
+<div class="row">
+	<div class="col"></div>
+	<div class="col-10 text-left" style="max-width: 1050px;">
+		<canvas id="myChart" width="400" height="300"></canvas>
+	</div>
+	<div class="col"></div>
+</div>
+
+<div class="row mb-3 mt-4">
+	<div class="col text-right">COMMISSIONS</div>
+	<div class="col-6 text-center">
+		<input type="range" min="0" max="99" value="0" step="1" class="slider" id="commissions">
+	</div>
+	<div class="col text-left"><span id="commissions_value"></span>%</div>
+</div>
+
+<div class="row mb-3">
+	<div class="col text-right">NON-HUMAN</div>
+	<div class="col-6 text-center">
+		<input type="range" min="0" max="100" value="0" step="1" class="slider" id="nonhuman">
+	</div>
+	<div class="col text-left"><span id="nonhuman_value"></span>%</div>
+</div>
+
+<div class="row mb-5">
+	<div class="col text-right">INVIEW</div>
+	<div class="col-6 text-center">
+		<input type="range" min="0" max="100" value="100" step="1" class="slider" id="inview">
+	</div>
+	<div class="col text-left"><span id="inview_value"></span>%</div>
+</div>
+
+<!-- BOTTOM LINE  -->
+<center>
+<div class="row" style="max-width: 450px;">
+	<div class="col-6">
+		<div class="card bg-light mb-5" style="max-width: 12rem;">
+		  <div class="card-header text-left">WORKING DOLLARS</div>
+		  <div class="card-body">
+		    <h3 class="card-title text-right">$<span id="working_dollars"></span></h5>
+		  </div>
+		</div>
+	</div>
+	<div class="col-6">
+		<div class="card bg-light mb-5" style="max-width: 12rem;">
+		  <div class="card-header text-left">WORKING SHARE</div>
+		  <div class="card-body">
+		    <h3 class="card-title text-right"><span id="working_share"></span>%</h5>
+		  </div>
+		</div>
+	</div>
+</div>
+</center>
+
+<!-- NAVIGATION  -->
+<div class="row bg-light fixed-bottom">
+	<div class="col"></div>
+	<div class="col-12" style="max-width: 750px;">
+		<!-- Just an image -->
+		<nav class="navbar navbar-light bg-light text-center">
+  			<a class="nav-link active" href="media.html">MEDIA</a>
+  			<a class="nav-link" href="commissions.html">COMMISSIONS</a>
+  			<a class="nav-link" href="non-human.html">NON-HUMAN</a>
+  			<a class="nav-link" href="data.html">DATA</a>
+  			<a class="nav-link" href="frequency.html">FREQUENCY</a>
+  			<a class="nav-link" href="roi.html">ROI</a>
+		</nav>
+	</div>
+	<div class="col"></div>
+</div>
+
+<script>
+
+// GENERAL
+
+function initValues() {
+	document.getElementById('working_dollars').innerHTML = parseInt(10000).toLocaleString('en');
+	document.getElementById('working_share').innerHTML = 100;
+
+}
+
+// SLIDER DEFINITIONS
+
+var commissions = document.getElementById("commissions");
+var commissions_output = document.getElementById("commissions_value");
+commissions_output.innerHTML = commissions.value;
+commissions.oninput = function() {
+	commissions_output.innerHTML = this.value;
+computeValues()
+}
+
+var nonhuman = document.getElementById("nonhuman");
+var nonhuman_output = document.getElementById("nonhuman_value");
+nonhuman_output.innerHTML = nonhuman.value;
+nonhuman.oninput = function() {
+	nonhuman_output.innerHTML = this.value;
+computeValues()
+}
+
+var inview = document.getElementById("inview");
+var inview_output = document.getElementById("inview_value");
+inview_output.innerHTML = inview.value;
+inview.oninput = function() {
+	inview_output.innerHTML = this.value;
+computeValues()
+}
+
+function computeValues() {
+
+  // GET CURRENT SLIDER VALUES
+
+  var commissions = +document.getElementById('commissions').value;
+  var nonhuman = +document.getElementById('nonhuman').value;
+  var inview = +document.getElementById('inview').value;
+
+  // COMPUTE GRAPH VALUES
+
+  var _after_commissions = 10000 * (1 - (commissions / 100))
+  var _human_impressions = _after_commissions * (1 - (nonhuman / 100))
+  var _viewed = _human_impressions * (inview / 100)
+
+
+  // COMPUTE SUMMARY VALUES
+
+  var _working_dollars = _viewed
+  var _working_share = _viewed / 10000 * 100
+
+  // CHANGE GRAPH VALUES
+  updateGraph(10000, _working_dollars)
+
+  // CHANGE SUMMARY VALUES
+  document.getElementById('working_dollars').innerHTML = parseInt(_working_dollars).toLocaleString('en');
+  document.getElementById('working_share').innerHTML = parseInt(_working_share).toLocaleString('en');
+
+
+}
+
+function updateGraph(a, b) {
+	myChart.data.datasets[0].data[0] = a;
+	myChart.data.datasets[0].data[1] = b;
+	myChart.update();
+}
+
+// GRAPH STARTS
+
+Chart.defaults.global.legend.display = false;
+Chart.defaults.global.defaultFontFamily = 'Alef';
+Chart.defaults.global.defaultFontSize = 20;
+Chart.defaults.global.defaultFontColor = 'rgba(0, 0, 0, 0.65)';
+
+var ctx = document.getElementById('myChart').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Investment ($)', 'Working ($) '],
+        datasets: [{
+            label: '$',
+            // STARTING VALUES
+            data: [10000, 10000
+            ],
+            backgroundColor: [
+                'rgba(0, 0, 0, 0.1)',
+                'rgba(192, 145, 231, .3)'
+            ],
+            borderColor: [
+                'rgba(0, 0, 0, 0.1)',
+                'rgba(0, 0, 0, 0.1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true,
+                    // Y-AXIS LIMIT
+                    max: 20000
+
+                }
+            }]
+        }
+    }
+});
+
+</script>
+
+</body>
+</html>

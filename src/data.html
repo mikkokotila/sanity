@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+
+<!-- HEADER STARTS -->
+
+<head>
+<title>SANITY</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="css/style.css">
+<link rel="shortcut icon" href="sanity_logo.png" type="image/x-icon"/>
+<script type="text/javascript" src="bundle.js"></script>
+</head>
+
+<!-- BODY STARTS -->
+
+<body onload="initValues()">
+
+<div class="container">
+
+<div class="row">
+	<div class="col-12 text-center mt-3 mb-3">
+		<img src="sanity_logo.png" height="40">
+	</div>
+</div>
+
+<div class="row">
+	<div class="col"></div>
+	<div class="col-8">
+		<h1 class="mb-4">Data Investment Viability</h1>
+	</div>
+	<div class="col">
+	</div>
+</div>
+
+<div class="row">
+	<div class="col"></div>
+	<div class="col-10 text-left" style="max-width: 1050px;">
+		<canvas id="myChart" width="400" height="300"></canvas>
+	</div>
+	<div class="col"></div>
+</div>
+
+<div class="row mt-4 mb-3">
+	<div class="col text-right">MEDIA CPM</div>
+	<div class="col-6 text-center">
+		<input type="range" min="0" max="100" value="3" step="1" class="slider" id="media_cpm">
+	</div>
+	<div class="col text-left">$<span id="media_cpm_value"></span></div>
+</div>
+
+<div class="row mb-3">
+	<div class="col text-right">DATA CPM</div>
+	<div class="col-6 text-center">
+		<input type="range" min="0" max="100" value="3" step="1" class="slider" id="data_cpm">
+	</div>
+	<div class="col text-left">$<span id="data_cpm_value"></span></div>
+</div>
+
+<div class="row mb-3">
+	<div class="col text-right">DATA COMMISSIONS</div>
+	<div class="col-6 text-center">
+		<input type="range" min="0" max="100" value="20" step="1" class="slider" id="data_commissions">
+	</div>
+	<div class="col text-left"><span id="data_commissions_value"></span>%</div>
+</div>
+
+<div class="row mb-3">
+	<div class="col text-right">OFF-TARGET DATA</div>
+	<div class="col-6 text-center">
+		<input type="range" min="0" max="100" value="35" step="1" class="slider" id="offtarget_data">
+	</div>
+	<div class="col text-left"><span id="offtarget_data_value"></span>%</div>
+</div>
+
+<div class="row mb-3">
+	<div class="col text-right">INVALID MEDIA</div>
+	<div class="col-6 text-center">
+		<input type="range" min="2" max="100" value="15" step="1" class="slider" id="invalid_media">
+	</div>
+	<div class="col text-left"><span id="invalid_media_value"></span>%</div>
+</div>
+
+<div class="row mb-5">
+	<div class="col text-right">INVIEW MEDIA</div>
+	<div class="col-6 text-center">
+		<input type="range" min="1" max="100" value="70" step="1" class="slider" id="inview_media">
+	</div>
+	<div class="col text-left"><span id="inview_media_value"></span>%</div>
+</div>
+
+<!-- BOTTOM LINE  -->
+<center>
+<div class="row" style="max-width: 450px;">
+	<div class="col-6">
+		<div class="card bg-light mb-5" style="max-width: 12rem;">
+		  <div class="card-header text-left">TRUE DATA CPM</div>
+		  <div class="card-body">
+		    <h3 class="card-title text-right">$<span id="true_data_cpm"></span></h5>
+		  </div>
+		</div>
+	</div>
+	<div class="col-6">
+		<div class="card bg-light mb-5" style="max-width: 12rem;">
+		  <div class="card-header text-left">MEDIA/DATA RATE</div>
+		  <div class="card-body">
+		    <h3 class="card-title text-right">1:<span id="mediadata_ratio"></span></h5>
+		  </div>
+		</div>
+	</div>
+</div>
+</center>
+
+
+<!-- NAVIGATION  -->
+<div class="row bg-light fixed-bottom">
+	<div class="col"></div>
+	<div class="col-12" style="max-width: 750px;">
+		<!-- Just an image -->
+		<nav class="navbar navbar-light bg-light text-center">
+  			<a class="nav-link" href="media.html">MEDIA</a>
+  			<a class="nav-link" href="commissions.html">COMMISSIONS</a>
+  			<a class="nav-link" href="non-human.html">NON-HUMAN</a>
+  			<a class="nav-link active" href="data.html">DATA</a>
+  			<a class="nav-link" href="frequency.html">FREQUENCY</a>
+  			<a class="nav-link" href="roi.html">ROI</a>
+		</nav>
+	</div>
+	<div class="col"></div>
+</div>
+
+<script>
+
+
+// GENERAL
+
+function initValues() {
+	document.getElementById('true_data_cpm').innerHTML = 9;
+	document.getElementById('mediadata_ratio').innerHTML = 3
+	;
+
+}
+
+// SLIDER DEFINITIONS
+
+var media_cpm = document.getElementById("media_cpm");
+var media_cpm_output = document.getElementById("media_cpm_value");
+media_cpm_output.innerHTML = media_cpm.value;
+media_cpm.oninput = function() {
+	media_cpm_output.innerHTML = this.value;
+computeValues()
+}
+
+var data_cpm = document.getElementById("data_cpm");
+var data_cpm_output = document.getElementById("data_cpm_value");
+data_cpm_output.innerHTML = data_cpm.value;
+data_cpm.oninput = function() {
+	data_cpm_output.innerHTML = this.value;
+computeValues()
+}
+
+var data_commissions = document.getElementById("data_commissions");
+var data_commissions_output = document.getElementById("data_commissions_value");
+data_commissions_output.innerHTML = data_commissions.value;
+data_commissions.oninput = function() {
+	data_commissions_output.innerHTML = this.value;
+computeValues()
+}
+
+var offtarget_data = document.getElementById("offtarget_data");
+var offtarget_data_output = document.getElementById("offtarget_data_value");
+offtarget_data_output.innerHTML = offtarget_data.value;
+offtarget_data.oninput = function() {
+	offtarget_data_output.innerHTML = this.value;
+computeValues()
+}
+
+var invalid_media = document.getElementById("invalid_media");
+var invalid_media_output = document.getElementById("invalid_media_value");
+invalid_media_output.innerHTML = invalid_media.value;
+invalid_media.oninput = function() {
+	invalid_media_output.innerHTML = this.value;
+computeValues()
+}
+
+var inview_media = document.getElementById("inview_media");
+var inview_media_output = document.getElementById("inview_media_value");
+inview_media_output.innerHTML = inview_media.value;
+inview_media.oninput = function() {
+	inview_media_output.innerHTML = this.value;
+computeValues()
+}
+
+function computeValues() {
+
+  // GET CURRENT SLIDER VALUES
+  var media_cpm = +document.getElementById('media_cpm').value;
+  var data_cpm = +document.getElementById('data_cpm').value;
+  var data_commissions = +document.getElementById('data_commissions').value;
+  var offtarget_data = +document.getElementById('offtarget_data').value;
+  var invalid_media = +document.getElementById('invalid_media').value;
+  var inview_media = +document.getElementById('inview_media').value;
+
+  // COMPUTE GRAPH VALUES
+  var _true_data_cpm = data_cpm / (1 - (data_commissions / 100)) / (1 - (offtarget_data / 100)) / (1 - (invalid_media / 100)) / (inview_media / 100)
+  var _mediadata_ratio = _true_data_cpm / media_cpm
+
+  // COMPUTE SUMMARY VALUES
+
+  // CHANGE GRAPH VALUES
+  updateGraph(media_cpm, data_cpm, _true_data_cpm)
+
+  // CHANGE SUMMARY VALUES
+  document.getElementById('true_data_cpm').innerHTML = parseInt(_true_data_cpm).toFixed(1).toLocaleString('en');
+  document.getElementById('mediadata_ratio').innerHTML = parseFloat(_mediadata_ratio).toFixed(1).toLocaleString('en');
+
+}
+
+function updateGraph(a, b, c) {
+	myChart.data.datasets[0].data[0] = a;
+	myChart.data.datasets[0].data[1] = b;
+	myChart.data.datasets[0].data[2] = c;
+	myChart.update();
+}
+
+// GRAPH STARTS
+
+Chart.defaults.global.legend.display = false;
+Chart.defaults.global.defaultFontFamily = 'Alef';
+Chart.defaults.global.defaultFontSize = 20;
+Chart.defaults.global.defaultFontColor = 'rgba(0, 0, 0, 0.65)';
+
+var ctx = document.getElementById('myChart').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Media CPM ($)', 'Data CPM ($)', 'True Data CPM ($)'],
+        datasets: [{
+            label: '$',
+            // STARTING VALUES
+            data: [3, 3, 9],
+            backgroundColor: [
+                'rgba(0, 0, 0, 0.1)',
+                'rgba(192, 145, 231, .3)',
+                'rgba(192, 145, 231, .3)'
+            ],
+            borderColor: [
+            	'rgba(0, 0, 0, 0.1)',
+                'rgba(0, 0, 0, 0.1)',
+                'rgba(0, 0, 0, 0.1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true,
+                    // Y-AXIS LIMIT
+                    max: 100
+
+                }
+            }]
+        }
+    }
+});
+
+</script>
+
+</body>
+</html>

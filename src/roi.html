@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html>
+
+<!-- HEADER STARTS -->
+
+<head>
+<title>SANITY</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="css/style.css">
+<link rel="shortcut icon" href="sanity_logo.png" type="image/x-icon"/>
+<script type="text/javascript" src="bundle.js"></script>
+</head>
+
+<!-- BODY STARTS -->
+
+<body onload="initValues()">
+
+<div class="container">
+
+<div class="row">
+	<div class="col-12 text-center mt-3 mb-3">
+		<img src="sanity_logo.png" height="40">
+	</div>
+</div>
+
+<div class="row">
+	<div class="col"></div>
+	<div class="col-8">
+		<h1 class="mb-4">Media Efficacy</h1>
+	</div>
+	<div class="col">
+	</div>
+</div>
+
+<div class="row">
+	<div class="col"></div>
+	<div class="col-10 text-left" style="max-width: 1050px;">
+		<canvas id="myChart" width="400" height="300"></canvas>
+	</div>
+	<div class="col"></div>
+</div>
+
+<div class="row mt-4 mb-3">
+	<div class="col text-right">BUDGET</div>
+	<div class="col-6 text-center">
+		<input type="range" min="0" max="100000" value="10000" step="1000" class="slider" id="budget">
+	</div>
+	<div class="col text-left">$<span id="budget_value"></span></div>
+</div>
+
+<div class="row mb-3">
+	<div class="col text-right">BASE CPM</div>
+	<div class="col-6 text-center">
+		<input type="range" min="0.01" max="50" value="3" step="0.01" class="slider" id="base_cpm">
+	</div>
+	<div class="col text-left">$<span id="base_cpm_value"></span></div>
+</div>
+
+<div class="row mb-3">
+	<div class="col text-right">COMMISSIONS</div>
+	<div class="col-6 text-center">
+		<input type="range" min="0" max="99" value="55" step="1" class="slider" id="commissions">
+	</div>
+	<div class="col text-left"><span id="commissions_value"></span>%</div>
+</div>
+
+<div class="row mb-3">
+	<div class="col text-right">NON-HUMAN</div>
+	<div class="col-6 text-center">
+		<input type="range" min="0" max="100" value="15" step="1" class="slider" id="nonhuman">
+	</div>
+	<div class="col text-left"><span id="nonhuman_value"></span>%</div>
+</div>
+
+<div class="row mb-3">
+	<div class="col text-right">INVIEW</div>
+	<div class="col-6 text-center">
+		<input type="range" min="0" max="100" value="75" step="1" class="slider" id="inview">
+	</div>
+	<div class="col text-left"><span id="inview_value"></span>%</div>
+</div>
+
+<div class="row mb-3">
+	<div class="col text-right">OVER-FREQUENCY</div>
+	<div class="col-6 text-center">
+		<input type="range" min="0" max="100" value="20" step="1" class="slider" id="overfrequency">
+	</div>
+	<div class="col text-left"><span id="overfrequency_value"></span>%</div>
+</div>
+
+<div class="row mb-3">
+	<div class="col text-right">CTR</div>
+	<div class="col-6 text-center">
+		<input type="range" min="0" max="5" value="0.02" step="0.01" class="slider" id="ctr">
+	</div>
+	<div class="col text-left"><span id="ctr_value"></span>%</div>
+</div>
+
+<div class="row mb-3">
+	<div class="col text-right">ACTION</div>
+	<div class="col-6 text-center">
+		<input type="range" min="0" max="100" value="20" step="1" class="slider" id="action">
+	</div>
+	<div class="col text-left"><span id="action_value"></span>%</div>
+</div>
+
+<div class="row mb-3">
+	<div class="col text-right">GOAL</div>
+	<div class="col-6 text-center">
+		<input type="range" min="0" max="100" value="20" step="1" class="slider" id="goal">
+	</div>
+	<div class="col text-left"><span id="goal_value"></span>%</div>
+</div>
+
+<div class="row mb-5">
+	<div class="col text-right">REVENUE</div>
+	<div class="col-6 text-center">
+		<input type="range" min="0" max="1000" value="80" step="1" class="slider" id="revenue">
+	</div>
+	<div class="col text-left">$<span id="revenue_value"></span></div>
+</div>
+
+<!-- BOTTOM LINE  -->
+<center>
+<div class="row" style="max-width: 400px;">
+	<div class="col-6">
+		<div class="card bg-light mb-5" style="max-width: 12rem;">
+		  <div class="card-header text-left">NET REVENUE</div>
+		  <div class="card-body">
+		    <h3 class="card-title text-right">$<span id="net_revenue"></span></h5>
+		  </div>
+		</div>
+	</div>
+	<div class="col-6">
+		<div class="card bg-light mb-5" style="max-width: 12rem;">
+		  <div class="card-header text-left">CAMPAIGN ROI</div>
+		  <div class="card-body">
+		    <h3 class="card-title text-right"><span id="campaign_roi"></span>%</h5>
+		  </div>
+		</div>
+	</div>
+</div>
+</center>
+
+
+<!-- NAVIGATION  -->
+<div class="row bg-light fixed-bottom">
+	<div class="col"></div>
+	<div class="col-12" style="max-width: 750px;">
+		<!-- Just an image -->
+		<nav class="navbar navbar-light bg-light text-center">
+  			<a class="nav-link" href="media.html">MEDIA</a>
+  			<a class="nav-link" href="commissions.html">COMMISSIONS</a>
+  			<a class="nav-link" href="non-human.html">NON-HUMAN</a>
+  			<a class="nav-link" href="data.html">DATA</a>
+  			<a class="nav-link" href="frequency.html">FREQUENCY</a>
+  			<a class="nav-link active" href="roi.html">ROI</a>
+		</nav>
+	</div>
+	<div class="col"></div>
+</div>
+
+<script>
+
+
+// GENERAL
+
+function initValues() {
+	document.getElementById('net_revenue').innerHTML = parseInt(-9760).toLocaleString('en');
+	document.getElementById('campaign_roi').innerHTML = -97;
+
+}
+
+// SLIDER DEFINITIONS
+
+var budget = document.getElementById("budget");
+var budget_output = document.getElementById("budget_value");
+budget_output.innerHTML = budget.value;
+budget.oninput = function() {
+	budget_output.innerHTML = this.value;
+computeValues()
+}
+
+var base_cpm = document.getElementById("base_cpm");
+var base_cpm_output = document.getElementById("base_cpm_value");
+base_cpm_output.innerHTML = base_cpm.value;
+base_cpm.oninput = function() {
+	base_cpm_output.innerHTML = this.value;
+computeValues()
+}
+
+var commissions = document.getElementById("commissions");
+var commissions_output = document.getElementById("commissions_value");
+commissions_output.innerHTML = commissions.value;
+commissions.oninput = function() {
+	commissions_output.innerHTML = this.value;
+computeValues()
+}
+
+var nonhuman = document.getElementById("nonhuman");
+var nonhuman_output = document.getElementById("nonhuman_value");
+nonhuman_output.innerHTML = nonhuman.value;
+nonhuman.oninput = function() {
+	nonhuman_output.innerHTML = this.value;
+computeValues()
+}
+
+var inview = document.getElementById("inview");
+var inview_output = document.getElementById("inview_value");
+inview_output.innerHTML = inview.value;
+inview.oninput = function() {
+	inview_output.innerHTML = this.value;
+computeValues()
+}
+
+var overfrequency = document.getElementById("overfrequency");
+var overfrequency_output = document.getElementById("overfrequency_value");
+overfrequency_output.innerHTML = overfrequency.value;
+overfrequency.oninput = function() {
+	overfrequency_output.innerHTML = this.value;
+computeValues()
+}
+
+var ctr = document.getElementById("ctr");
+var ctr_output = document.getElementById("ctr_value");
+ctr_output.innerHTML = ctr.value;
+ctr.oninput = function() {
+	ctr_output.innerHTML = this.value;
+computeValues()
+}
+
+var action = document.getElementById("action");
+var action_output = document.getElementById("action_value");
+action_output.innerHTML = action.value;
+action.oninput = function() {
+	action_output.innerHTML = this.value;
+computeValues()
+}
+
+var goal = document.getElementById("goal");
+var goal_output = document.getElementById("goal_value");
+goal_output.innerHTML = goal.value;
+goal.oninput = function() {
+	goal_output.innerHTML = this.value;
+computeValues()
+}
+
+var revenue = document.getElementById("revenue");
+var revenue_output = document.getElementById("revenue_value");
+revenue_output.innerHTML = revenue.value;
+revenue.oninput = function() {
+	revenue_output.innerHTML = this.value;
+computeValues()
+}
+
+
+function computeValues() {
+
+  // GET CURRENT SLIDER VALUES
+  var budget = +document.getElementById('budget').value;
+  var base_cpm = +document.getElementById('base_cpm').value;
+  var commissions = +document.getElementById('commissions').value;
+  var nonhuman = +document.getElementById('nonhuman').value;
+  var inview = +document.getElementById('inview').value;
+  var overfrequency = +document.getElementById('overfrequency').value;
+  var ctr = +document.getElementById('ctr').value;
+  var action = +document.getElementById('action').value;
+  var goal = +document.getElementById('goal').value;
+  var revenue = +document.getElementById('revenue').value;
+
+  // COMPUTE GRAPH VALUES
+
+  var _actual_cpm = base_cpm / (1 - (commissions / 100))
+  console.log(_actual_cpm)
+  var _impressions = budget / _actual_cpm * 1000
+  console.log(_impressions)
+  var _human_impressions = _impressions * (1 - (commissions / 100))
+  console.log(_human_impressions)
+  var _viewed = _human_impressions * (inview / 100)
+  console.log(_viewed)
+  var _incap = _viewed * (1 - (overfrequency / 100))
+  console.log(_incap)
+
+  var _clicked = _incap * (ctr / 100)
+  console.log(_clicked)
+  var _acted = parseInt(_clicked) * (action / 100)
+  console.log(_acted)
+  var _bought = parseInt(_acted) * (goal / 100)
+  console.log(_bought)
+  var _money = parseInt(_bought) * revenue
+  console.log(_money)
+
+  // COMPUTE SUMMARY VALUES
+
+  var _net_revenue = _money - budget
+  var _campaign_roi = (_net_revenue / budget) * 100
+
+  // CHANGE GRAPH VALUES
+  updateGraph(budget, _money)
+
+  // CHANGE SUMMARY VALUES
+  document.getElementById('net_revenue').innerHTML = parseInt(_net_revenue).toLocaleString('en');
+  document.getElementById('campaign_roi').innerHTML = parseInt(_campaign_roi).toLocaleString('en');
+
+
+}
+
+function updateGraph(a, b) {
+	myChart.data.datasets[0].data[0] = a;
+	myChart.data.datasets[0].data[1] = b;
+	myChart.update();
+}
+
+// GRAPH STARTS
+
+Chart.defaults.global.legend.display = false;
+Chart.defaults.global.defaultFontFamily = 'Alef';
+Chart.defaults.global.defaultFontSize = 20;
+Chart.defaults.global.defaultFontColor = 'rgba(0, 0, 0, 0.65)';
+
+var ctx = document.getElementById('myChart').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Investment ($)', 'Return ($) '],
+        datasets: [{
+            label: '$',
+            // STARTING VALUES
+            data: [10000, 240],
+            backgroundColor: [
+                'rgba(0, 0, 0, 0.1)',
+                'rgba(192, 145, 231, .3)'
+            ],
+            borderColor: [
+                'rgba(0, 0, 0, 0.1)',
+                'rgba(0, 0, 0, 0.1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true,
+                    // Y-AXIS LIMIT
+                    max: 100000
+
+                }
+            }]
+        }
+    }
+});
+
+</script>
+
+</body>
+</html>

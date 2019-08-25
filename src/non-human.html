@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+
+<!-- HEADER STARTS -->
+
+<head>
+<title>SANITY</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="css/style.css">
+<link rel="shortcut icon" href="sanity_logo.png" type="image/x-icon"/>
+<script type="text/javascript" src="bundle.js"></script>
+</head>
+
+<!-- BODY STARTS -->
+
+<body onload="initValues()">
+
+<div class="container">
+
+<div class="row">
+	<div class="col-12 text-center mt-3 mb-3">
+		<img src="sanity_logo.png" height="40">
+	</div>
+</div>
+
+<div class="row">
+	<div class="col"></div>
+	<div class="col-8">
+		<h1 class="mb-4">Invalid Traffic Damages</h1>
+	</div>
+	<div class="col">
+	</div>
+</div>
+
+<div class="row">
+	<div class="col"></div>
+	<div class="col-10 text-left" style="max-width: 1050px;">
+		<canvas id="myChart" width="400" height="300"></canvas>
+	</div>
+	<div class="col"></div>
+</div>
+
+<div class="row mt-4 mb-3">
+	<div class="col text-right">DIGITAL SHARE</div>
+	<div class="col-6 text-center">
+		<input type="range" min="0" max="100" value="50" step="1" class="slider" id="digital_share">
+	</div>
+	<div class="col text-left"><span id="digital_share_value"></span>%</div>
+</div>
+
+<div class="row mb-3">
+	<div class="col text-right">EXPOSED CHANNELS</div>
+	<div class="col-6 text-center">
+		<input type="range" min="0" max="100" value="80" step="1" class="slider" id="exposed_channels">
+	</div>
+	<div class="col text-left"><span id="exposed_channels_value"></span>%</div>
+</div>
+
+<div class="row mb-3">
+	<div class="col text-right">INVALID RATE</div>
+	<div class="col-6 text-center">
+		<input type="range" min="2" max="100" value="15" step="1" class="slider" id="invalid_rate">
+	</div>
+	<div class="col text-left"><span id="invalid_rate_value"></span>%</div>
+</div>
+
+<div class="row mb-5">
+	<div class="col text-right">ADVERTISING ATTRIBUTION</div>
+	<div class="col-6 text-center">
+		<input type="range" min="1" max="100" value="30" step="1" class="slider" id="advertising_attribution">
+	</div>
+	<div class="col text-left"><span id="advertising_attribution_value"></span>%</div>
+</div>
+
+<!-- BOTTOM LINE  -->
+<center>
+<div class="row" style="max-width: 450px;">
+	<div class="col-6">
+		<div class="card bg-light mb-5" style="max-width: 12rem;">
+		  <div class="card-header text-left">BUDGET EXPOSURE</div>
+		  <div class="card-body">
+		    <h3 class="card-title text-right"><span id="budget_exposure"></span>%</h5>
+		  </div>
+		</div>
+	</div>
+	<div class="col-6">
+		<div class="card bg-light mb-5" style="max-width: 12rem;">
+		  <div class="card-header text-left">SALES DECLINE</div>
+		  <div class="card-body">
+		    <h3 class="card-title text-right"><span id="sales_decline"></span>%</h5>
+		  </div>
+		</div>
+	</div>
+</div>
+</center>
+
+
+<!-- NAVIGATION  -->
+<div class="row bg-light fixed-bottom">
+	<div class="col"></div>
+	<div class="col-12" style="max-width: 750px;">
+		<!-- Just an image -->
+		<nav class="navbar navbar-light bg-light text-center">
+  			<a class="nav-link" href="media.html">MEDIA</a>
+  			<a class="nav-link" href="commissions.html">COMMISSIONS</a>
+  			<a class="nav-link active" href="non-human.html">NON-HUMAN</a>
+  			<a class="nav-link" href="data.html">DATA</a>
+  			<a class="nav-link" href="frequency.html">FREQUENCY</a>
+  			<a class="nav-link" href="roi.html">ROI</a>
+		</nav>
+	</div>
+	<div class="col"></div>
+</div>
+
+<script>
+
+
+// GENERAL
+
+function initValues() {
+	document.getElementById('budget_exposure').innerHTML = 6;
+	document.getElementById('sales_decline').innerHTML = 1;
+
+}
+
+// SLIDER DEFINITIONS
+
+var digital_share = document.getElementById("digital_share");
+var digital_share_output = document.getElementById("digital_share_value");
+digital_share_output.innerHTML = digital_share.value;
+digital_share.oninput = function() {
+	digital_share_output.innerHTML = this.value;
+computeValues()
+}
+
+var exposed_channels = document.getElementById("exposed_channels");
+var exposed_channels_output = document.getElementById("exposed_channels_value");
+exposed_channels_output.innerHTML = exposed_channels.value;
+exposed_channels.oninput = function() {
+	exposed_channels_output.innerHTML = this.value;
+computeValues()
+}
+
+var invalid_rate = document.getElementById("invalid_rate");
+var invalid_rate_output = document.getElementById("invalid_rate_value");
+invalid_rate_output.innerHTML = invalid_rate.value;
+invalid_rate.oninput = function() {
+	invalid_rate_output.innerHTML = this.value;
+computeValues()
+}
+
+var advertising_attribution = document.getElementById("advertising_attribution");
+var advertising_attribution_output = document.getElementById("advertising_attribution_value");
+advertising_attribution_output.innerHTML = advertising_attribution.value;
+advertising_attribution.oninput = function() {
+	advertising_attribution_output.innerHTML = this.value;
+computeValues()
+}
+
+function computeValues() {
+
+  // GET CURRENT SLIDER VALUES
+  var digital_share = +document.getElementById('digital_share').value;
+  var exposed_channels = +document.getElementById('exposed_channels').value;
+  var invalid_rate = +document.getElementById('invalid_rate').value;
+  var advertising_attribution = +document.getElementById('advertising_attribution').value;
+
+
+  // COMPUTE GRAPH VALUES
+
+  var _budget_exposure = digital_share * (exposed_channels / 100) * (invalid_rate / 100)
+  var _sales_decline = _budget_exposure * (advertising_attribution / 100)
+
+  // COMPUTE SUMMARY VALUES
+
+  // CHANGE GRAPH VALUES
+  updateGraph(_budget_exposure, _sales_decline)
+
+  // CHANGE SUMMARY VALUES
+  document.getElementById('budget_exposure').innerHTML = parseInt(_budget_exposure).toLocaleString('en');
+  document.getElementById('sales_decline').innerHTML = parseInt(_sales_decline).toLocaleString('en');
+
+}
+
+function updateGraph(a, b) {
+	myChart.data.datasets[0].data[0] = a;
+	myChart.data.datasets[0].data[1] = b;
+	myChart.update();
+}
+
+// GRAPH STARTS
+
+Chart.defaults.global.legend.display = false;
+Chart.defaults.global.defaultFontFamily = 'Alef';
+Chart.defaults.global.defaultFontSize = 20;
+Chart.defaults.global.defaultFontColor = 'rgba(0, 0, 0, 0.65)';
+
+var ctx = document.getElementById('myChart').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Exposed Budget (%)', 'Sales Decline (%) '],
+        datasets: [{
+            label: '$',
+            // STARTING VALUES
+            data: [6, 1],
+            backgroundColor: [
+                'rgba(192, 145, 231, .3)',
+                'rgba(192, 145, 231, .3)'
+            ],
+            borderColor: [
+                'rgba(0, 0, 0, 0.1)',
+                'rgba(0, 0, 0, 0.1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true,
+                    // Y-AXIS LIMIT
+                    max: 100
+
+                }
+            }]
+        }
+    }
+});
+
+</script>
+
+</body>
+</html>

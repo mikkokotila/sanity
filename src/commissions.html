@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+
+<!-- HEADER STARTS -->
+
+<head>
+<title>SANITY</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="css/style.css">
+<link rel="shortcut icon" href="sanity_logo.png" type="image/x-icon"/>
+<script type="text/javascript" src="bundle.js"></script>
+</head>
+
+<!-- BODY STARTS -->
+
+<body onload="initValues()">
+
+<div class="container">
+
+<div class="row">
+	<div class="col-12 text-center mt-3 mb-3">
+		<img src="sanity_logo.png" height="40">
+	</div>
+</div>
+
+<div class="row">
+	<div class="col"></div>
+	<div class="col-8">
+		<h1 class="mb-4">Commissions Calculator (on $10,000)</h1>
+	</div>
+	<div class="col">
+	</div>
+</div>
+
+<div class="row">
+	<div class="col"></div>
+	<div class="col-10 text-left" style="max-width: 1050px;">
+		<canvas id="myChart" width="400" height="300"></canvas>
+	</div>
+	<div class="col"></div>
+</div>
+
+<div class="row mb-3 mt-4">
+	<div class="col text-right">AOR</div>
+	<div class="col-6 text-center">
+		<input type="range" min="0" max="100" value="5" step="1" class="slider" id="aor">
+	</div>
+	<div class="col text-left"><span id="aor_value"></span>%</div>
+</div>
+
+<div class="row mb-3">
+	<div class="col text-right">TRADING DESK</div>
+	<div class="col-6 text-center">
+		<input type="range" min="0" max="100" value="15" step="1" class="slider" id="trading_desk">
+	</div>
+	<div class="col text-left"><span id="trading_desk_value"></span>%</div>
+</div>
+
+<div class="row mb-3">
+	<div class="col text-right">DSP</div>
+	<div class="col-6 text-center">
+		<input type="range" min="0" max="100" value="10" step="1" class="slider" id="dsp">
+	</div>
+	<div class="col text-left"><span id="dsp_value"></span>%</div>
+</div>
+
+<div class="row mb-3">
+	<div class="col text-right">VALUE ADDS</div>
+	<div class="col-6 text-center">
+		<input type="range" min="0" max="100" value="20" step="1" class="slider" id="value_adds">
+	</div>
+	<div class="col text-left"><span id="value_adds_value"></span>%</div>
+</div>
+
+<div class="row mb-3">
+	<div class="col text-right">EXCHANGE</div>
+	<div class="col-6 text-center">
+		<input type="range" min="0" max="100" value="5" step="1" class="slider" id="exchange">
+	</div>
+	<div class="col text-left"><span id="exchange_value"></span>%</div>
+</div>
+
+<div class="row mb-5">
+	<div class="col text-right">AD NETWORK</div>
+	<div class="col-6 text-center">
+		<input type="range" min="0" max="100" value="17" step="1" class="slider" id="ad_network">
+	</div>
+	<div class="col text-left"><span id="ad_network_value"></span>%</div>
+</div>
+
+<!-- BOTTOM LINE  -->
+<center>
+<div class="row" style="max-width: 450px;">
+	<div class="col-6">
+		<div class="card bg-light mb-5" style="max-width: 12rem;">
+		  <div class="card-header text-left">WORKING DOLLARS</div>
+		  <div class="card-body">
+		    <h3 class="card-title text-right">$<span id="working_dollars"></span></h5>
+		  </div>
+		</div>
+	</div>
+	<div class="col-6">
+		<div class="card bg-light mb-5" style="max-width: 12rem;">
+		  <div class="card-header text-left">WORKING SHARE</div>
+		  <div class="card-body">
+		    <h3 class="card-title text-right"><span id="working_share"></span>%</h5>
+		  </div>
+		</div>
+	</div>
+</div>
+</center>
+
+<!-- NAVIGATION  -->
+<div class="row bg-light fixed-bottom">
+	<div class="col"></div>
+	<div class="col-12" style="max-width: 750px;">
+		<!-- Just an image -->
+		<nav class="navbar navbar-light bg-light text-center">
+  			<a class="nav-link" href="media.html">MEDIA</a>
+  			<a class="nav-link active" href="commissions.html">COMMISSIONS</a>
+  			<a class="nav-link" href="non-human.html">NON-HUMAN</a>
+  			<a class="nav-link" href="data.html">DATA</a>
+  			<a class="nav-link" href="frequency.html">FREQUENCY</a>
+  			<a class="nav-link" href="roi.html">ROI</a>
+		</nav>
+	</div>
+	<div class="col"></div>
+</div>
+
+<script>
+
+// GENERAL
+
+function initValues() {
+	document.getElementById('working_dollars').innerHTML = parseInt(4584).toLocaleString('en');
+	document.getElementById('working_share').innerHTML = 45;
+
+}
+
+// SLIDER DEFINITIONS
+
+var aor = document.getElementById("aor");
+var aor_output = document.getElementById("aor_value");
+aor_output.innerHTML = aor.value;
+aor.oninput = function() {
+	aor_output.innerHTML = this.value;
+computeValues()
+}
+
+var trading_desk = document.getElementById("trading_desk");
+var trading_desk_output = document.getElementById("trading_desk_value");
+trading_desk_output.innerHTML = trading_desk.value;
+trading_desk.oninput = function() {
+	trading_desk_output.innerHTML = this.value;
+computeValues()
+}
+
+var dsp = document.getElementById("dsp");
+var dsp_output = document.getElementById("dsp_value");
+dsp_output.innerHTML = dsp.value;
+dsp.oninput = function() {
+	dsp_output.innerHTML = this.value;
+computeValues()
+}
+
+var value_adds = document.getElementById("value_adds");
+var value_adds_output = document.getElementById("value_adds_value");
+value_adds_output.innerHTML = value_adds.value;
+value_adds.oninput = function() {
+	value_adds_output.innerHTML = this.value;
+computeValues()
+}
+
+var exchange = document.getElementById("exchange");
+var exchange_output = document.getElementById("exchange_value");
+exchange_output.innerHTML = exchange.value;
+exchange.oninput = function() {
+	exchange_output.innerHTML = this.value;
+computeValues()
+}
+
+var ad_network = document.getElementById("ad_network");
+var ad_network_output = document.getElementById("ad_network_value");
+ad_network_output.innerHTML = ad_network.value;
+ad_network.oninput = function() {
+	ad_network_output.innerHTML = this.value;
+computeValues()
+}
+
+function computeValues() {
+
+  // GET CURRENT SLIDER VALUES
+
+  var aor = +document.getElementById('aor').value;
+  var trading_desk = +document.getElementById('trading_desk').value;
+  var dsp = +document.getElementById('dsp').value;
+  var value_adds = +document.getElementById('value_adds').value;
+  var exchange = +document.getElementById('exchange').value;
+  var ad_network = +document.getElementById('ad_network').value;
+
+
+  // COMPUTE GRAPH VALUES
+
+  var _aor = 10000 * (aor / 100)
+  var current = 10000 - _aor
+  var _trading_desk = current * (trading_desk / 100)
+  current -= _trading_desk
+  var _dsp = current * (dsp / 100)
+  current -= _dsp
+  var _value_adds = current * (value_adds / 100)
+  current -= _value_adds
+  var _exchange = current * (exchange / 100)
+  current -= _exchange
+  var _ad_network = current * (ad_network / 100)
+  current -= _ad_network
+
+  // COMPUTE SUMMARY VALUES
+
+  var _working_dollars = current
+  var _working_share = current / 10000 * 100
+
+  // CHANGE GRAPH VALUES
+  updateGraph(_aor, _trading_desk, _dsp, _value_adds, _exchange, _ad_network)
+
+  // CHANGE SUMMARY VALUES
+  document.getElementById('working_dollars').innerHTML = parseInt(_working_dollars).toLocaleString('en');
+  document.getElementById('working_share').innerHTML = parseInt(_working_share).toLocaleString('en');
+
+
+}
+
+function updateGraph(a, b, c, d, e, f) {
+	myChart.data.datasets[0].data[0] = a;
+	myChart.data.datasets[0].data[1] = b;
+	myChart.data.datasets[0].data[2] = c;
+	myChart.data.datasets[0].data[3] = d;
+	myChart.data.datasets[0].data[4] = e;
+	myChart.data.datasets[0].data[5] = f;
+	myChart.update();
+}
+
+// GRAPH STARTS
+
+Chart.defaults.global.legend.display = false;
+Chart.defaults.global.defaultFontFamily = 'Alef';
+Chart.defaults.global.defaultFontSize = 20;
+Chart.defaults.global.defaultFontColor = 'rgba(0, 0, 0, 0.65)';
+
+var ctx = document.getElementById('myChart').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['AOR', 'Trading Desk', 'DSP', 'Value Adds', 'Exchange', 'Ad Network'],
+        datasets: [{
+            label: '$',
+            // STARTING VALUES
+            data: [500, 1425, 808, 1453, 291, 939
+            ],
+            backgroundColor: [
+                'rgba(192, 145, 231, .85)',
+                'rgba(192, 145, 231, .7)',
+                'rgba(192, 145, 231, .55)',
+                'rgba(192, 145, 231, .4)',
+                'rgba(192, 145, 231, .25)',
+                'rgba(192, 145, 231, .1)'
+            ],
+            borderColor: [
+                'rgba(0, 0, 0, 0.1)',
+                'rgba(0, 0, 0, 0.1)',
+                'rgba(0, 0, 0, 0.1)',
+                'rgba(0, 0, 0, 0.1)',
+                'rgba(0, 0, 0, 0.1)',
+                'rgba(0, 0, 0, 0.1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true,
+                    // Y-AXIS LIMIT
+                    max: 20000
+
+                }
+            }]
+        }
+    }
+});
+
+</script>
+
+</body>
+</html>
