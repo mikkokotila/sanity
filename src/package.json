@@ -35,7 +35,7 @@
     "clusterize.js": "^0.18.1",
     "cors": "^2.8.5",
     "errorhandler": "^1.5.1",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "express-basic-auth": "^1.2.0",
     "express-session": "^1.16.2",
     "jquery": "^3.4.1",
